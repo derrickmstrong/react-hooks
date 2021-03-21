@@ -1,19 +1,41 @@
 import React, { useEffect, useState } from "react";
 
 function App() {
-  const [name, setName] = useState("Derrick");
-  const handleClick = () => setName("Rick");
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    document.title = `Celebrate ${name}`;
-  }, [name]);
+    // Fetch data
+    fetch(`https://api.github.com/users`)
+      // Parse response to json
+      .then((res) => res.json())
+      // Set data to response results
+      .then((res) => setData(res));
+    return () => {};
+  }, []);
 
-  return (
-    <section>
-      <p>Congratulations {name}!</p>
-      <button onClick={handleClick}>Change Winner</button>
-    </section>
-  );
+  const handleClick = () => {
+    setData([]);
+  };
+
+  if (data) {
+    return (
+      <>
+        <ul>
+          {data.map(({ login, avatar_url, id }) => (
+            <li key={id} style={{ listStyle: "none" }}>
+              <img src={avatar_url} width="50" />
+              <br />
+              {login}
+              <br />
+              <br />
+            </li>
+          ))}
+        </ul>
+        <button onClick={handleClick}>Remove Data</button>
+      </>
+    );
+  }
+  return "No data";
 }
 
 export default App;
