@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 function App() {
-  const [status, setStatus] = useState("Not Delivered")
+  const [checked, setChecked] = useState(false);
   const handleClick = () => {
-    setStatus("Delivered")
-  }
+    setChecked((checked) => !checked);
+  };
   return (
     <div>
-      <h1>The package is: {status} </h1>
-      <button onClick={handleClick}>Deliver</button>
+      <input type="checkbox" value={checked} onClick={handleClick} />
+      <p>{checked ? "checked" : "not checked"}</p>
     </div>
   );
 }
