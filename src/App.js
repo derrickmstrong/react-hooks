@@ -1,13 +1,18 @@
-import React, { useReducer } from "react";
+import React, { Fragment, useReducer } from "react";
 
 function App() {
   // useReducer(Takes in a function that will return a new state, the inital state)
-  const [number, setNumber] = useReducer(
-    (number, newNumber) => number + newNumber,
-    0
+  const [checked, toggle] = useReducer(
+    (checked) => !checked,
+    false
   );
 
-  return <h1 onClick={() => setNumber(1)}>{number}</h1>;
+  return (
+    <Fragment>
+      <input type="checkbox" value={checked} onChange={toggle} />
+      <p>{checked ? "checked" : "unchecked"}</p>
+    </Fragment>
+  )
 }
 
 export default App;
